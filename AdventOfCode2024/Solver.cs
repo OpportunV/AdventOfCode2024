@@ -13,7 +13,10 @@ public class Solver
 
         foreach (var cls in classes)
         {
-            if (Activator.CreateInstance(cls) is not Day instance) continue;
+            if (Activator.CreateInstance(cls) is not Day instance)
+            {
+                continue;
+            }
 
             PrintParts(instance);
         }
@@ -23,7 +26,10 @@ public class Solver
     {
         var classes = GetClasses();
         var targetDay = classes.FirstOrDefault(cls => cls.Name == $"{nameof(Day)}{day}");
-        if (targetDay != null && Activator.CreateInstance(targetDay) is Day instance) PrintParts(instance);
+        if (targetDay != null && Activator.CreateInstance(targetDay) is Day instance)
+        {
+            PrintParts(instance);
+        }
     }
 
     private static IEnumerable<Type> GetClasses()
