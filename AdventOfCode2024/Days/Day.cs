@@ -10,7 +10,6 @@ public abstract class Day
     public Day()
     {
         _inputPath = Path.Combine("Input", $"{GetType().Name}.txt");
-        Console.WriteLine(_inputPath);
     }
 
     public abstract string Part1();
