@@ -27,7 +27,7 @@ public class Day3 : Day
 
         var sum = _regexDo.Matches(inp)
             .Sum(match => _regexMul.Matches(match.Groups[0].Value)
-            .Sum(match2 => int.Parse(match2.Groups[1].Value) * int.Parse(match2.Groups[2].Value)));
+                .Sum(match2 => int.Parse(match2.Groups[1].Value) * int.Parse(match2.Groups[2].Value)));
 
         return sum.ToString();
     }
