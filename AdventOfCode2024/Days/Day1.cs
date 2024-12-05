@@ -21,8 +21,7 @@ public class Day1 : Day
     public override string Part2()
     {
         GetTwoLists(out var left, out var right);
-        var rightLookup = right.GroupBy(num => num)
-            .ToDictionary(group => group.Key, group => group.Count());
+        var rightLookup = right.CountBy(num => num).ToDictionary();
 
         return left.Select(num => num * rightLookup.GetValueOrDefault(num, 0))
             .Sum()
