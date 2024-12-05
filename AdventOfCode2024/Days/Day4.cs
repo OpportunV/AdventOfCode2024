@@ -28,7 +28,7 @@ public class Day4 : Day
         {
             for (var col = 0; col < _cols; col++)
             {
-                if (_grid[row][col] != 'X')
+                if (_grid[row][col] != Xmas[0])
                 {
                     continue;
                 }
@@ -51,7 +51,7 @@ public class Day4 : Day
         {
             for (var col = 0; col < _cols; col++)
             {
-                if (_grid[row][col] != 'M')
+                if (_grid[row][col] != Mas[0])
                 {
                     continue;
                 }
