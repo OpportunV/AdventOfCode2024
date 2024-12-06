@@ -28,54 +28,47 @@ public class Day6 : Day
 
     public override string Part1()
     {
-        var positions = GetPosiblePositions();
+        var positions = GetPossiblePositions();
         return positions.Count.ToString();
     }
 
     public override string Part2()
     {
+        var positions = GetPossiblePositions();
         var counter = 0;
         var seen = new HashSet<(GridPos2d, int)>();
-        for (var row = 0; row < _rows; row++)
+        foreach (var (row, col) in positions)
         {
-            for (var col = 0; col < _cols; col++)
+            var pos = GetStartPos();
+            if (row == pos.Row && col == pos.Col)
             {
-                if (_grid[row][col] == '#')
-                {
-                    continue;
-                }
-
-                var pos = GetStartPos();
-                if (row == pos.Row && col == pos.Col)
-                {
-                    continue;
-                }
-
-                _grid[row][col] = '#';
-                var dirIndex = 0;
-                seen.Clear();
-                while (true)
-                {
-                    if (!seen.Add((pos, dirIndex)))
-                    {
-                        counter++;
-                        break;
-                    }
-
-                    if (!TrySimulateStep(ref pos, ref dirIndex))
-                    {
-                        break;
-                    }
-                }
-
-                _grid[row][col] = '.';
+                continue;
             }
+
+            _grid[row][col] = '#';
+            var dirIndex = 0;
+            seen.Clear();
+            while (true)
+            {
+                if (!seen.Add((pos, dirIndex)))
+                {
+                    counter++;
+                    break;
+                }
+
+                if (!TrySimulateStep(ref pos, ref dirIndex))
+                {
+                    break;
+                }
+            }
+
+            _grid[row][col] = '.';
         }
 
         return counter.ToString();
     }
 
-    private HashSet<GridPos2d> GetPosiblePositions()
+    private HashSet<GridPos2d> GetPossiblePositions()
     {
         var pos = GetStartPos();
         var dirIndex = 0;
@@ -89,7 +82,7 @@ public class Day6 : Day
                 break;
             }
         }
-        
+
         return seen;
     }
 
