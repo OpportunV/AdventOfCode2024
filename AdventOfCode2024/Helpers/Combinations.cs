@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace AdventOfCode2024.Helpers;
 
-public class CombinationsGenerator
+public static class Combinations
 {
-    public static IEnumerable<string> Generate(IReadOnlyList<char> symbols, int length)
+    public static IEnumerable<string> GeneratePermutations(IReadOnlyList<char> symbols, int length)
     {
         var combinations = symbols.Select(c => c.ToString());
 

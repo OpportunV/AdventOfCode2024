@@ -51,7 +51,7 @@ public class Day7 : Day
     {
         var target = equation[0];
         var other = equation[1..];
-        var combinations = CombinationsGenerator.Generate(operators.Keys.ToList(), other.Count - 1);
+        var combinations = Combinations.GeneratePermutations(operators.Keys.ToList(), other.Count - 1);
 
         foreach (var combination in combinations)
         {
