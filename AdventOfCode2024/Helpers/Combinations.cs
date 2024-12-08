@@ -19,4 +19,16 @@ public static class Combinations
 
         return combinations;
     }
+
+    public static IEnumerable<(T first, T second)> GenerateAllPairs<T>(IList<T> values)
+    {
+        for (var i = 0; i < values.Count; i++)
+        {
+            var value = values[i];
+            for (var j = i + 1; j < values.Count; j++)
+            {
+                yield return (value, values[j]);
+            }
+        }
+    }
 }

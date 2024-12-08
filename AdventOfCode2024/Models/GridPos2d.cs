@@ -48,6 +48,16 @@ public record GridPos2d(int Row, int Col)
         return Adjacent(rows, cols, length, _directionsSide);
     }
 
+    public bool IsInside(GridPos2d min, GridPos2d max)
+    {
+        return Row >= min.Row && Row < max.Row && Col >= min.Col && Col < max.Col;
+    }
+
+    public bool IsInside(int rows, int cols)
+    {
+        return Row >= 0 && Row < rows && Col >= 0 && Col < cols;
+    }
+
     public static GridPos2d operator *(GridPos2d pos2d, int other)
     {
         return new GridPos2d(pos2d.Row * other, pos2d.Col * other);
@@ -56,6 +66,16 @@ public record GridPos2d(int Row, int Col)
     public static GridPos2d operator +(GridPos2d pos2d, GridPos2d other)
     {
         return new GridPos2d(pos2d.Row + other.Row, pos2d.Col + other.Col);
+    }
+
+    public static GridPos2d operator -(GridPos2d pos2d, GridPos2d other)
+    {
+        return new GridPos2d(pos2d.Row - other.Row, pos2d.Col - other.Col);
+    }
+
+    public static GridPos2d operator -(GridPos2d pos2d)
+    {
+        return new GridPos2d(-pos2d.Row, -pos2d.Col);
     }
 
     private IEnumerable<IEnumerable<GridPos2d>> Adjacent(int rows, int cols, int length, List<GridPos2d> directions)
