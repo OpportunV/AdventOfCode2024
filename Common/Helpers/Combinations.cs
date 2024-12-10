@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace AdventOfCode2024.Helpers;
+﻿namespace Common.Helpers;
 
 public static class Combinations
 {

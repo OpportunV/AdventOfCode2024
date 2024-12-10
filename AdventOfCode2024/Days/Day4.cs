@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AdventOfCode2024.Models;
+using Common.Models;
 
 namespace AdventOfCode2024.Days;
 

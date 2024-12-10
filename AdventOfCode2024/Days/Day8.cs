@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AdventOfCode2024.Helpers;
-using AdventOfCode2024.Models;
+using Common.Helpers;
+using Common.Models;
 
 namespace AdventOfCode2024.Days;
 

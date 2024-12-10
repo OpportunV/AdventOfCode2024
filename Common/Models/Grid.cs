@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace AdventOfCode2024.Models;
+﻿namespace Common.Models;
 
 public class Grid<T>
 {

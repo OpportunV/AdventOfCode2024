@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode2024.Extensions;
+﻿namespace Common.Extensions;
 
 public static class RangeExt
 {
