@@ -29,7 +29,12 @@ public class Grid<T> : IGrid
         Cols = grid[0].Length;
     }
 
-    public IEnumerable<GridItem<T>> LinearIterationPairs()
+    public bool IsInside(GridPos2d pos)
+    {
+        return pos.IsInside(Rows, Cols);
+    }
+
+    public IEnumerable<GridItem<T>> Flatten()
     {
         for (var row = 0; row < Rows; row++)
         {
@@ -41,8 +46,36 @@ public class Grid<T> : IGrid
         }
     }
 
-    public IEnumerable<GridItem<T>> AdjacentSidePairs(GridPos2d pos)
+    public IEnumerable<GridItem<T>> VerticalFlatten()
     {
-        return pos.AdjacentSide(Rows, Cols).Select(newPos => new GridItem<T>(this[newPos], newPos));
+        for (var col = 0; col < Cols; col++)
+        {
+            for (var row = 0; row < Rows; row++)
+            {
+                var pos = new GridPos2d(row, col);
+                yield return new GridItem<T>(this[pos], pos);
+            }
+        }
+    }
+
+    public IEnumerable<GridItem<T>> AdjacentSide(GridPos2d pos)
+    {
+        return Adjacent(pos.AdjacentSide());
+    }
+
+    public IEnumerable<GridItem<T>> AdjacentDiag(GridPos2d pos)
+    {
+        return Adjacent(pos.AdjacentDiag());
+    }
+
+    public IEnumerable<GridItem<T>> AdjacentAll(GridPos2d pos)
+    {
+        return Adjacent(pos.AdjacentAll());
+    }
+
+    private IEnumerable<GridItem<T>> Adjacent(IEnumerable<GridPos2d> adjacents)
+    {
+        return adjacents.Where(IsInside)
+            .Select(newPos => new GridItem<T>(this[newPos], newPos));
     }
 }

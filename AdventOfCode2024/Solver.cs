@@ -10,7 +10,7 @@ public class Solver
 {
     private static readonly Stopwatch _stopwatch = new();
 
-    public void PrintAllAnswers()
+    public void PrintAllDays()
     {
         var classes = GetClasses();
 
@@ -22,6 +22,7 @@ public class Solver
             }
 
             PrintParts(instance);
+            Console.WriteLine("\n\n");
         }
     }
 

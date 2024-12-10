@@ -20,7 +20,7 @@ public class Day4 : Day
     public override string Part1()
     {
         var counter = 0;
-        foreach (var (value, pos) in _grid.LinearIterationPairs())
+        foreach (var (value, pos) in _grid.Flatten())
         {
             if (value != Xmas[0])
             {
@@ -39,7 +39,7 @@ public class Day4 : Day
     {
         var wordPositions = new List<(GridPos2d start, GridPos2d end)>();
 
-        foreach (var (value, pos) in _grid.LinearIterationPairs())
+        foreach (var (value, pos) in _grid.Flatten())
         {
             if (value != Mas[0])
             {

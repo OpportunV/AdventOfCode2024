@@ -20,7 +20,7 @@ public class Day10 : Day
     public override string Part1()
     {
         return _grid
-            .LinearIterationPairs()
+            .Flatten()
             .Select(pair => pair.Value == 0 ? Score(GetTrailheadEnds(pair.Pos)) : 0)
             .Sum()
             .ToString();
@@ -29,7 +29,7 @@ public class Day10 : Day
     public override string Part2()
     {
         return _grid
-            .LinearIterationPairs()
+            .Flatten()
             .Select(pair => pair.Value == 0 ? Rating(GetTrailheadEnds(pair.Pos)) : 0)
             .Sum()
             .ToString();
@@ -60,7 +60,7 @@ public class Day10 : Day
                 continue;
             }
 
-            foreach (var (val, next) in _grid.AdjacentSidePairs(current))
+            foreach (var (val, next) in _grid.AdjacentSide(current))
             {
                 if (val - value == StepSize)
                 {
