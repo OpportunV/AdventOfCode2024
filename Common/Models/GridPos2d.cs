@@ -1,4 +1,6 @@
-﻿namespace Common.Models;
+﻿using Common.Models.Interfaces;
+
+namespace Common.Models;
 
 public record GridPos2d(int Row, int Col)
 {
@@ -53,6 +55,11 @@ public record GridPos2d(int Row, int Col)
     public bool IsInside(GridPos2d min, GridPos2d max)
     {
         return Row >= min.Row && Row < max.Row && Col >= min.Col && Col < max.Col;
+    }
+
+    public bool IsInside(IGrid grid)
+    {
+        return IsInside(grid.Rows, grid.Cols);
     }
 
     public bool IsInside(int rows, int cols)

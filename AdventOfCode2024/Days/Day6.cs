@@ -110,7 +110,7 @@ public class Day6 : Day
 
     private bool IsInside(GridPos2d pos)
     {
-        return pos.IsInside(_grid.Rows, _grid.Cols);
+        return pos.IsInside(_grid);
     }
 
     private GridPos2d GetStartPos()

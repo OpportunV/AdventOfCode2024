@@ -1,6 +1,8 @@
-﻿namespace Common.Models;
+﻿using Common.Models.Interfaces;
 
-public class Grid<T>
+namespace Common.Models;
+
+public class Grid<T> : IGrid
 {
     public int Rows { get; }
 
