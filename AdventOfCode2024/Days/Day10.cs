@@ -60,7 +60,7 @@ public class Day10 : Day
                 continue;
             }
 
-            foreach (var (val, next) in _grid.AdjacentPairs(current))
+            foreach (var (val, next) in _grid.AdjacentSidePairs(current))
             {
                 if (val - value == StepSize)
                 {

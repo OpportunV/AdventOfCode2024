@@ -6,38 +6,30 @@ namespace AdventOfCode2024.Days;
 
 public class Day4 : Day
 {
-    private readonly char[][] _grid;
-    private readonly int _rows;
-    private readonly int _cols;
+    private readonly Grid<char> _grid;
 
     private const string Xmas = "XMAS";
     private const string Mas = "MAS";
 
     public Day4()
     {
-        var inp = GetInput();
-        _grid = inp.Select(line => line.ToCharArray()).ToArray();
-        _rows = _grid.Length;
-        _cols = _grid[0].Length;
+        var grid = GetInput().Select(line => line.ToCharArray()).ToArray();
+        _grid = new Grid<char>(grid);
     }
 
     public override string Part1()
     {
         var counter = 0;
-        for (var row = 0; row < _rows; row++)
+        foreach (var (value, pos) in _grid.LinearIterationPairs())
         {
-            for (var col = 0; col < _cols; col++)
+            if (value != Xmas[0])
             {
-                if (_grid[row][col] != Xmas[0])
-                {
-                    continue;
-                }
-
-                var pos = new GridPos2d(row, col);
-                counter += pos.AdjacentAll(_rows, _cols, Xmas.Length)
-                    .Select(wordCoords => wordCoords.Select(newPos => _grid[newPos.Row][newPos.Col]).ToArray())
-                    .Select(chars => new string(chars)).Count(word => word == Xmas);
+                continue;
             }
+
+            counter += pos.AdjacentAll(_grid.Rows, _grid.Cols, Xmas.Length)
+                .Select(wordCoords => wordCoords.Select(newPos => _grid[newPos]).ToArray())
+                .Select(chars => new string(chars)).Count(word => word == Xmas);
         }
 
         return counter.ToString();
@@ -47,23 +39,19 @@ public class Day4 : Day
     {
         var wordPositions = new List<(GridPos2d start, GridPos2d end)>();
 
-        for (var row = 0; row < _rows; row++)
+        foreach (var (value, pos) in _grid.LinearIterationPairs())
         {
-            for (var col = 0; col < _cols; col++)
+            if (value != Mas[0])
             {
-                if (_grid[row][col] != Mas[0])
-                {
-                    continue;
-                }
-
-                var pos = new GridPos2d(row, col);
-                var wordCoords = pos.AdjacentDiag(_rows, _cols, Mas.Length)
-                    .Where(wordCoords =>
-                        new string(wordCoords.Select(newPos => _grid[newPos.Row][newPos.Col]).ToArray()) == Mas)
-                    .Select(coords => coords.OrderBy(coord => coord.Row).ThenBy(coord => coord.Col).ToArray())
-                    .Select(coords => (coords[0], coords[^1])).ToHashSet();
-                wordPositions.AddRange(wordCoords);
+                continue;
             }
+
+            var wordCoords = pos.AdjacentDiag(_grid.Rows, _grid.Cols, Mas.Length)
+                .Where(wordCoords =>
+                    new string(wordCoords.Select(newPos => _grid[newPos]).ToArray()) == Mas)
+                .Select(coords => coords.OrderBy(coord => coord.Row).ThenBy(coord => coord.Col).ToArray())
+                .Select(coords => (coords[0], coords[^1])).ToHashSet();
+            wordPositions.AddRange(wordCoords);
         }
 
         return wordPositions.Count(wordPos => wordPositions.Any(secondWordPos => IsCross(wordPos, secondWordPos)))

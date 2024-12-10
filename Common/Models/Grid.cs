@@ -31,7 +31,7 @@ public class Grid<T>
         }
     }
 
-    public IEnumerable<GridItem<T>> AdjacentPairs(GridPos2d pos)
+    public IEnumerable<GridItem<T>> AdjacentSidePairs(GridPos2d pos)
     {
         return pos.AdjacentSide(Rows, Cols).Select(newPos => new GridItem<T>(this[newPos], newPos));
     }
