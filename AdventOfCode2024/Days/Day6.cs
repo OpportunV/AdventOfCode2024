@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Helpers;
 using Common.Models;
 
 namespace AdventOfCode2024.Days;
@@ -9,13 +10,7 @@ public class Day6 : Day
 {
     private readonly Grid<char> _grid;
 
-    private static readonly List<GridPos2d> _directionsSide =
-    [
-        new(-1, 0),
-        new(0, 1),
-        new(1, 0),
-        new(0, -1)
-    ];
+    private static readonly IReadOnlyList<GridPos2d> _directionsSide = Directions2d.Side;
 
     public Day6()
     {

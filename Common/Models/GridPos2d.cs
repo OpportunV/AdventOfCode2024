@@ -1,55 +1,28 @@
-﻿using Common.Models.Interfaces;
+﻿using Common.Helpers;
+using Common.Models.Interfaces;
 
 namespace Common.Models;
 
 public record GridPos2d(int Row, int Col)
 {
-    private static readonly List<GridPos2d> _directionsAll =
-    [
-        new(0, 1),
-        new(1, 1),
-        new(1, 0),
-        new(1, -1),
-        new(0, -1),
-        new(-1, -1),
-        new(-1, 0),
-        new(-1, 1)
-    ];
-
-    private static readonly List<GridPos2d> _directionsDiag =
-    [
-        new(1, 1),
-        new(1, -1),
-        new(-1, -1),
-        new(-1, 1)
-    ];
-
-    private static readonly List<GridPos2d> _directionsSide =
-    [
-        new(0, 1),
-        new(1, 0),
-        new(0, -1),
-        new(-1, 0)
-    ];
-
     public IEnumerable<IEnumerable<GridPos2d>> AdjacentAll(int rows, int cols, int length)
     {
-        return Adjacent(rows, cols, length, _directionsAll);
+        return Adjacent(rows, cols, length, Directions2d.All);
     }
 
     public IEnumerable<IEnumerable<GridPos2d>> AdjacentDiag(int rows, int cols, int length)
     {
-        return Adjacent(rows, cols, length, _directionsDiag);
+        return Adjacent(rows, cols, length, Directions2d.Diag);
     }
 
     public IEnumerable<IEnumerable<GridPos2d>> AdjacentSide(int rows, int cols, int length)
     {
-        return Adjacent(rows, cols, length, _directionsSide);
+        return Adjacent(rows, cols, length, Directions2d.Side);
     }
 
     public IEnumerable<GridPos2d> AdjacentSide(int rows, int cols)
     {
-        return Adjacent(rows, cols, _directionsSide);
+        return Adjacent(rows, cols, Directions2d.Side);
     }
 
     public bool IsInside(GridPos2d min, GridPos2d max)
@@ -87,7 +60,8 @@ public record GridPos2d(int Row, int Col)
         return new GridPos2d(-pos2d.Row, -pos2d.Col);
     }
 
-    private IEnumerable<IEnumerable<GridPos2d>> Adjacent(int rows, int cols, int length, List<GridPos2d> directions)
+    private IEnumerable<IEnumerable<GridPos2d>> Adjacent(int rows, int cols, int length,
+        IEnumerable<GridPos2d> directions)
     {
         foreach (var dir in directions)
         {
@@ -102,7 +76,7 @@ public record GridPos2d(int Row, int Col)
         }
     }
 
-    private IEnumerable<GridPos2d> Adjacent(int rows, int cols, List<GridPos2d> directions)
+    private IEnumerable<GridPos2d> Adjacent(int rows, int cols, IEnumerable<GridPos2d> directions)
     {
         foreach (var dir in directions)
         {
