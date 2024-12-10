@@ -7,9 +7,7 @@ namespace AdventOfCode2024.Days;
 
 public class Day6 : Day
 {
-    private readonly char[][] _grid;
-    private readonly int _cols;
-    private readonly int _rows;
+    private readonly Grid<char> _grid;
 
     private static readonly List<GridPos2d> _directionsSide =
     [
@@ -21,9 +19,8 @@ public class Day6 : Day
 
     public Day6()
     {
-        _grid = GetInput().Select(line => line.ToCharArray()).ToArray();
-        _rows = _grid.Length;
-        _cols = _grid[0].Length;
+        var grid = GetInput().Select(line => line.ToCharArray()).ToArray();
+        _grid = new Grid<char>(grid);
     }
 
     public override string Part1()
@@ -45,7 +42,7 @@ public class Day6 : Day
                 continue;
             }
 
-            _grid[row][col] = '#';
+            _grid[row, col] = '#';
             var dirIndex = 0;
             seen.Clear();
             while (true)
@@ -62,7 +59,7 @@ public class Day6 : Day
                 }
             }
 
-            _grid[row][col] = '.';
+            _grid[row, col] = '.';
         }
 
         return counter.ToString();
@@ -94,7 +91,7 @@ public class Day6 : Day
             return false;
         }
 
-        if (_grid[newPos.Row][newPos.Col] == '#')
+        if (_grid[newPos] == '#')
         {
             dirIndex = NextDirIndex(dirIndex);
         }
@@ -113,20 +110,15 @@ public class Day6 : Day
 
     private bool IsInside(GridPos2d pos)
     {
-        return pos.Row >= 0 && pos.Row < _cols && pos.Col >= 0 && pos.Col < _rows;
+        return pos.IsInside(_grid.Rows, _grid.Cols);
     }
 
     private GridPos2d GetStartPos()
     {
-        for (var i = 0; i < _rows; i++)
+        var start = _grid.LinearIterationPairs().FirstOrDefault(item => item.Value == '^');
+        if (start is not null)
         {
-            for (var j = 0; j < _cols; j++)
-            {
-                if (_grid[i][j] == '^')
-                {
-                    return new GridPos2d(i, j);
-                }
-            }
+            return start.Pos;
         }
 
         throw new ArgumentOutOfRangeException(nameof(_grid), "Starting position is not found");

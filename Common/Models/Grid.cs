@@ -6,9 +6,17 @@ public class Grid<T>
 
     public int Cols { get; }
 
-    public T this[int row, int col] => _grid[row][col];
+    public T this[int row, int col]
+    {
+        get => _grid[row][col];
+        set => _grid[row][col] = value;
+    }
 
-    public T this[GridPos2d pos] => _grid[pos.Row][pos.Col];
+    public T this[GridPos2d pos]
+    {
+        get => _grid[pos.Row][pos.Col];
+        set => _grid[pos.Row][pos.Col] = value;
+    }
 
     private readonly T[][] _grid;
 
