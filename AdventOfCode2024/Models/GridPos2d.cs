@@ -48,6 +48,11 @@ public record GridPos2d(int Row, int Col)
         return Adjacent(rows, cols, length, _directionsSide);
     }
 
+    public IEnumerable<GridPos2d> AdjacentSide(int rows, int cols)
+    {
+        return Adjacent(rows, cols, _directionsSide);
+    }
+
     public bool IsInside(GridPos2d min, GridPos2d max)
     {
         return Row >= min.Row && Row < max.Row && Col >= min.Col && Col < max.Col;
@@ -90,6 +95,21 @@ public record GridPos2d(int Row, int Col)
             }
 
             yield return Enumerable.Range(0, length).Select(i => this + dir * i);
+        }
+    }
+
+    private IEnumerable<GridPos2d> Adjacent(int rows, int cols, List<GridPos2d> directions)
+    {
+        foreach (var dir in directions)
+        {
+            var endPos = this + dir;
+
+            if (0 > endPos.Row || endPos.Row >= rows || 0 > endPos.Col || endPos.Col >= cols)
+            {
+                continue;
+            }
+
+            yield return endPos;
         }
     }
 }
