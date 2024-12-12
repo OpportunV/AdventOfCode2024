@@ -87,7 +87,7 @@ public class Day6 : Day
     private bool TrySimulateStep(ref GridPos2d pos, ref int dirIndex)
     {
         var newPos = pos + _directionsSide[dirIndex];
-        if (!_grid.IsInside(newPos))
+        if (!_grid.Contains(newPos))
         {
             return false;
         }

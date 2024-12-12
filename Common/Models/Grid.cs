@@ -29,7 +29,7 @@ public class Grid<T> : IGrid
         Cols = grid[0].Length;
     }
 
-    public bool IsInside(GridPos2d pos)
+    public bool Contains(GridPos2d pos)
     {
         return pos.IsInside(Rows, Cols);
     }
@@ -58,6 +58,21 @@ public class Grid<T> : IGrid
         }
     }
 
+    public IEnumerable<GridItem<T>> AdjacentSide(GridItem<T> item)
+    {
+        return AdjacentSide(item.Pos);
+    }
+
+    public IEnumerable<GridItem<T>> AdjacentDiag(GridItem<T> item)
+    {
+        return AdjacentDiag(item.Pos);
+    }
+
+    public IEnumerable<GridItem<T>> AdjacentAll(GridItem<T> item)
+    {
+        return AdjacentAll(item.Pos);
+    }
+
     public IEnumerable<GridItem<T>> AdjacentSide(GridPos2d pos)
     {
         return Adjacent(pos.AdjacentSide());
@@ -75,7 +90,7 @@ public class Grid<T> : IGrid
 
     private IEnumerable<GridItem<T>> Adjacent(IEnumerable<GridPos2d> adjacents)
     {
-        return adjacents.Where(IsInside)
+        return adjacents.Where(Contains)
             .Select(newPos => new GridItem<T>(this[newPos], newPos));
     }
 }
