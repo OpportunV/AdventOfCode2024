@@ -1,4 +1,5 @@
-﻿using Common.Models.Interfaces;
+﻿using System.Text;
+using Common.Models.Interfaces;
 
 namespace Common.Models;
 
@@ -86,6 +87,27 @@ public class Grid<T> : IGrid
     public IEnumerable<GridItem<T>> AdjacentAll(GridPos2d pos)
     {
         return Adjacent(pos.AdjacentAll());
+    }
+
+    public string ToString(Func<T, object>? itemFormatter)
+    {
+        var res = new StringBuilder();
+        for (var i = 0; i < Rows; i++)
+        {
+            for (var j = 0; j < Cols; j++)
+            {
+                res.Append(itemFormatter?.Invoke(this[i, j]) ?? this[i, j]);
+            }
+
+            res.AppendLine();
+        }
+
+        return res.ToString();
+    }
+
+    public override string ToString()
+    {
+        return ToString(null);
     }
 
     private IEnumerable<GridItem<T>> Adjacent(IEnumerable<GridPos2d> adjacents)
