@@ -1,9 +1,12 @@
-﻿using Common.Helpers;
+﻿using System.Text.RegularExpressions;
+using Common.Helpers;
 
 namespace Common.Models;
 
 public record GridPos2d(int Row, int Col)
 {
+    private static readonly Regex _regex = new(@".*?(-?\d+).*?(-?\d+).*");
+
     public IEnumerable<GridPos2d> AdjacentAll()
     {
         return Adjacent(Directions2d.All);
@@ -57,6 +60,17 @@ public record GridPos2d(int Row, int Col)
     public static GridPos2d operator -(GridPos2d pos2d)
     {
         return new GridPos2d(-pos2d.Row, -pos2d.Col);
+    }
+
+    public override string ToString()
+    {
+        return $"({Row},{Col})";
+    }
+
+    public static GridPos2d Parse(string gridPos2dString)
+    {
+        var matches = _regex.Matches(gridPos2dString);
+        return new GridPos2d(int.Parse(matches[0].Groups[1].Value), int.Parse(matches[0].Groups[2].Value));
     }
 
     private IEnumerable<IEnumerable<GridPos2d>> Adjacent(int rows, int cols, int length,

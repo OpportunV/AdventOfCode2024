@@ -44,10 +44,9 @@ public class Day16 : Day
 
     private int CalculateBestScore(GridPos2d pos, int dir)
     {
-        var toVisit = new PriorityQueue<(GridPos2d pos, int dir, HashSet<GridPos2d> path), int>();
-        var path = new HashSet<GridPos2d> { pos };
+        var toVisit = new PriorityQueue<(GridPos2d pos, int dir, string path), int>();
         var bestPaths = new HashSet<GridPos2d>();
-        toVisit.Enqueue((pos, dir, path), 0);
+        toVisit.Enqueue((pos, dir, pos.ToString()), 0);
         var seen = new Dictionary<(GridPos2d pos, int dir), int>();
         var best = int.MaxValue;
 
@@ -70,14 +69,14 @@ public class Day16 : Day
             if (_grid[curPos] == End)
             {
                 best = Math.Min(best, curScore);
-                bestPaths.UnionWith(curPath);
+                bestPaths.UnionWith(curPath.Split("|").Select(GridPos2d.Parse).ToHashSet());
                 continue;
             }
 
             var newPos = curPos + Directions2d.Side[curDir];
             if (_grid[newPos] != Wall)
             {
-                toVisit.Enqueue((newPos, curDir, [..curPath, newPos]), curScore + MovingPoints);
+                toVisit.Enqueue((newPos, curDir, string.Join("|", curPath, newPos)), curScore + MovingPoints);
             }
 
             var newDir = RotateLeft(curDir);
