@@ -54,7 +54,7 @@ public class Day17 : Day
                     }
                 }
             }
-            
+
             regs = newRegs;
             ind--;
         }
@@ -78,7 +78,7 @@ public class Day17 : Day
                     registers[1] ^= operand;
                     break;
                 case 2:
-                    registers[1] = PosMod(Combo(operand, registers) , 8);
+                    registers[1] = PosMod(Combo(operand, registers), 8);
                     break;
                 case 3:
                     if (registers[0] == 0)
@@ -92,7 +92,7 @@ public class Day17 : Day
                     registers[1] ^= registers[2];
                     break;
                 case 5:
-                    output.Add((byte)PosMod(Combo(operand, registers) , 8));
+                    output.Add((byte)PosMod(Combo(operand, registers), 8));
                     break;
                 case 6:
                     registers[1] = (int)(registers[0] / (long)Math.Pow(2, Combo(operand, registers)));
