@@ -52,9 +52,19 @@ public record GridPos2d(int Row, int Col)
         return new GridPos2d(pos2d.Row + other.Row, pos2d.Col + other.Col);
     }
 
+    public static GridPos2d operator +(GridPos2d pos2d, int other)
+    {
+        return new GridPos2d(pos2d.Row + other, pos2d.Col + other);
+    }
+
     public static GridPos2d operator -(GridPos2d pos2d, GridPos2d other)
     {
         return new GridPos2d(pos2d.Row - other.Row, pos2d.Col - other.Col);
+    }
+
+    public static GridPos2d operator -(GridPos2d pos2d, int other)
+    {
+        return new GridPos2d(pos2d.Row - other, pos2d.Col - other);
     }
 
     public static GridPos2d operator -(GridPos2d pos2d)

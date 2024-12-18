@@ -23,11 +23,38 @@ public class Grid<T> : IGrid
 
     private readonly T[][] _grid;
 
+    public Grid(Grid<T> grid)
+    {
+        Rows = grid.Rows;
+        Cols = grid.Cols;
+        _grid = new T[Rows][];
+        for (var i = 0; i < Rows; i++)
+        {
+            _grid[i] = [..grid._grid[i]];
+        }
+    }
+
     public Grid(T[][] grid)
     {
         _grid = grid;
         Rows = grid.Length;
         Cols = grid[0].Length;
+    }
+
+    public Grid(GridPos2d size, T @default) : this(size.Row, size.Col, @default)
+    {
+    }
+
+    public Grid(int rows, int cols, T @default)
+    {
+        _grid = new T[rows][];
+        for (var i = 0; i < rows; i++)
+        {
+            _grid[i] = Enumerable.Repeat(@default, cols).ToArray();
+        }
+
+        Rows = rows;
+        Cols = cols;
     }
 
     public bool Contains(GridPos2d pos)
