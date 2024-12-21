@@ -5,6 +5,9 @@ namespace Common.Models;
 
 public record GridPos2d(int Row, int Col)
 {
+    public static readonly GridPos2d Zero = new(0, 0);
+    public static readonly GridPos2d One = new(1, 1);
+
     private static readonly Regex _regex = new(@".*?(-?\d+).*?(-?\d+).*");
 
     public IEnumerable<GridPos2d> AdjacentAll()
@@ -40,6 +43,11 @@ public record GridPos2d(int Row, int Col)
     public bool IsInside(int rows, int cols)
     {
         return Row >= 0 && Row < rows && Col >= 0 && Col < cols;
+    }
+
+    public int ManhattanTo(GridPos2d other)
+    {
+        return Math.Abs(Row - other.Row) + Math.Abs(Col - other.Col);
     }
 
     public static GridPos2d operator *(GridPos2d pos2d, int other)
