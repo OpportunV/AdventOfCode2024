@@ -44,7 +44,7 @@ public class Day23 : Day
         foreach (var (pc, other) in _graph)
         {
             var network = new HashSet<string> { pc };
-            foreach (var pc1 in other)
+            foreach (var pc1 in other.OrderByDescending(pcOther => other.Intersect(_graph[pcOther]).Count()))
             {
                 if (network.All(networkPc => _graph[pc1].Contains(networkPc)))
                 {
